@@ -1,0 +1,13 @@
+<div *ngFor="let item of wines">
+  <div>
+    <img src="{{imagesUrl+item.image}}"/>
+    <h3>{{item.name}}</h3>
+    <div><p>Bottle: </p>{{item.cost.bottle}}</div>
+    <div><p>Case: </p>{{item.cost.case}}</div>
+    <ul>
+      <li *ngFor="let tag of item.tags">
+        {{tag}}
+      </li>
+    </ul>
+  </div>
+</div>

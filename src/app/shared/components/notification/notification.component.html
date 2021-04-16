@@ -1,0 +1,15 @@
+<div *ngIf="notificationService.messages.length > 0">
+  <div class="alert-container">
+    <div  *ngFor="let message of notificationService.messages">
+      <div #alert class="alert alert-{{message.type}} alert-dismissible fade show" role="alert">
+        <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="alert-heading"></h4>
+        <p>{{message.message}}</p>
+        <hr>
+        <strong class="mb-0">{{message.title}}</strong>
+      </div>
+    </div>
+  </div>
+</div>
