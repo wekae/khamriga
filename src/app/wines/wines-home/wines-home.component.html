@@ -1,13 +1,125 @@
-<div *ngFor="let item of wines">
-  <div>
-    <img src="{{imagesUrl+item.image}}"/>
-    <h3>{{item.name}}</h3>
-    <div><p>Bottle: </p>{{item.cost.bottle}}</div>
-    <div><p>Case: </p>{{item.cost.case}}</div>
-    <ul>
-      <li *ngFor="let tag of item.tags">
-        {{tag}}
-      </li>
-    </ul>
+<div class="container">
+  <div class="row p-3">
+    <div class="col-md-12 vw-100">
+      <h4 class="title">
+        Wine Shop<br>
+        <span class="sub-title">wineshop.com</span>
+      </h4>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 filter-tab">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active">Show Me</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">Show All</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active">
+          <div class="row">
+            <div class="col-4 px-2 pb-2">
+              <button class="btn btn-light btn-wine-even">White</button>
+            </div>
+            <div class="col-4 px-2 pb-2">
+              <button class="btn btn-light btn-wine-even">Red</button>
+            </div>
+            <div class="col-4 px-2 pb-2">
+              <button class="btn btn-light btn-wine-even">Sparkling</button>
+            </div>
+            <div class="col-4 px-2 pb-2">
+              <button class="btn btn-light btn-wine-even">Sparkling</button>
+            </div>
+            <div class="col-8 pb-2">
+              <span class="order-label" style="">Order by</span>
+              <button class="btn btn-light btn-wine" style="width:50%">Price</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 pt-2">
+      <div class="row">
+        <div class="col-md-3 px-1 py-0">
+          <div class="block-content delivery-info">
+            <p>Delivery info</p>
+          </div>
+        </div>
+        <div class="col-md-3 px-1 py-0">
+          <div class="block-content bottles">
+            <h5>
+              36
+              Bottles
+            </h5>
+
+          </div>
+        </div>
+        <div class="col-md-6 px-1 py-0">
+          <div class="block-content cart p-4">
+            <div>
+              <div class="row px-0">
+                <div class="col-7">
+                  <a class="btn btn-link btn-wine-even btn-cart"><mdb-icon fas icon="shopping-cart" size="md"></mdb-icon> View Cart</a>
+                </div>
+                <div class="col-5">
+                  <a class="btn btn-light btn-wine-even btn-cart-2"><mdb-icon fas icon="trash-alt" size="md"></mdb-icon> Empty Cart</a>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="row px-0">
+                <div class="col-7">
+                  <p class="cart-total">Ksh 432.56</p>
+                </div>
+                <div class="col-5">
+                  <button class="btn btn-dark btn-wine-even"><mdb-icon fas icon="check" size="md"></mdb-icon> Check Out</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="items-container" style=""><!--Items Container-->
+      <div class="item" *ngFor="let item of wines; let i=index;" style=""><!--Item-->
+        <div class="item-container" style=""><!--Item container-->
+          <div class="image-contaner" style=""><!--Image container-->
+            <img alt="{{item.name}}" src="{{imagesUrl+item.image}}"/>
+          </div>
+          <div class="item-details-container" style=""><!--Item details container-->
+            <h2 style="">{{item.no}}</h2>
+            <h5 style="">{{item.name}}</h5>
+            <div class="row no-gutters"><!--Quantity-->
+              <div class="bottle-container" style=""><!--bottle-->
+                <p class="bottle" style="">
+                  Bottle:<br>
+                  {{item.cost.bottle|currency}}
+                </p>
+              </div>
+              <div class=""><!--Case-->
+                <p class="case" style="">
+                  Case:<br>
+                  {{item.cost.case|currency}}
+                </p>
+              </div>
+            </div>
+            <div class="row no-gutters px-0">
+              <button class="col-5 btn btn-sm btn-light btn-wine" style="">Details</button>
+              <div class="col-1 mx-2"></div>
+              <button class="col-5 btn btn-sm btn-dark btn-wine" style="">Add To Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

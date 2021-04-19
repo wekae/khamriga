@@ -17,6 +17,8 @@ export class WinesHomeComponent implements OnInit {
   loading = true;
   error = false;
 
+  cartItems: Wine[];
+
 
 
   constructor(
@@ -25,13 +27,14 @@ export class WinesHomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.notificationService.showMessage('primary', 'test', 'this is a test');
+    // this.notificationService.showMessage('primary', 'test', 'this is a test');
     this.getAllWines();
   }
 
   getAllWines(){
     this.winesService.getAll().subscribe(response => {
       this.wines = response;
+      this.cartItems = this.wines;
     }, error1 => {
       this.error = true;
     });

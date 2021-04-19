@@ -8,8 +8,11 @@ import {WinesModule} from './wines/wines.module';
 @NgModule({
   declarations: [],
   imports: [
+    CommonModule,
     SharedModule,
-    CommonModule
+  ],
+  exports: [
+    SharedModule,
   ]
 })
 export class KhamrigaModule { }
