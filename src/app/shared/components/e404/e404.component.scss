@@ -1,0 +1,25 @@
+@import "~angular-bootstrap-md/assets/scss/mdb";
+.title{
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1{
+    font-size:19rem;
+  }
+  h3{
+    font-size:8rem;
+    font-weight: 700;
+    color: $grey-lighten-3;
+  }
+}
+.content{
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+

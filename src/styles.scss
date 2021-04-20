@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import "~angular-bootstrap-md/assets/scss/mdb";
+@import '~ngx-toastr/toastr';
 
 $color-primary:#4d4d4d;
 $color-secondary:#929292;
@@ -13,6 +14,68 @@ $color-accent-3: #eeeeee;
 }
 body{
   font-size:16px;
+}
+
+.font{
+  &-weight{
+    &-100{
+      font-weight: 100;
+    }
+    &-200{
+      font-weight: 200;
+    }
+    &-300{
+      font-weight: 300;
+    }
+    &-400{
+      font-weight: 400;
+    }
+    &-500{
+      font-weight: 500;
+    }
+    &-600{
+      font-weight: 600;
+    }
+    &-700{
+      font-weight: 700;
+    }
+    &-800{
+      font-weight: 800;
+    }
+    &-900{
+      font-weight: 900;
+    }
+  }
+}
+
+
+.btn{
+  &-light{}
+  &-light, &-dark, &-link{
+    transition: all 600ms ease;
+  }
+  &-light:hover, &-link:hover{
+    background-color: $color-accent;
+  }
+  &-dark:hover{
+    background-color: $grey-lighten-2;
+    color:$grey-darken-4;
+  }
+  &-cart{
+    background-color: $grey-lighten-4;
+    &-2{
+      background-color: $grey-lighten-3;
+    }
+  }
+  &-wine{
+    font-family: Arial,sans-serif;
+    font-size:0.7rem;
+  }
+  &-wine-even{
+    font-family: Arial,sans-serif;
+    width: 100%;
+    font-size:0.7rem;
+  }
 }
 
 

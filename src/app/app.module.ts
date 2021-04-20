@@ -11,6 +11,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {KhamrigaModule} from './khamriga.module';
 import {SharedModule} from './shared/shared.module';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {SharedModule} from './shared/shared.module';
     BrowserAnimationsModule,
     HttpClientModule,
     MDBBootstrapModule.forRoot(),
+    ToastrModule.forRoot(), // ToastrModule added
     KhamrigaModule,
     SharedModule,
   ],

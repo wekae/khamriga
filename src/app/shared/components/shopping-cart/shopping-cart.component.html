@@ -1,0 +1,94 @@
+<a type="button"  class="btn btn-link btn-wine-even btn-cart waves-light" (click)="shoppingCartModal.show(); loadShoppingCart();"><mdb-icon fas icon="shopping-cart" size="md"></mdb-icon> View Cart</a>
+
+
+<div mdbModal #shoppingCartModal="mdbModal" class="modal fade right" tabindex="-1" role="dialog" aria-labelledby="shoppingCart"
+     aria-hidden="true">
+  <div class="modal-dialog modal-full-height modal-right" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="shoppingCartModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="shopping-cart-title w-100"><mdb-icon fas icon="shopping-cart" size="md"></mdb-icon> Shopping Cart</h4>
+      </div>
+      <div class="modal-body">
+        <div class="cart-items" *ngIf="cartItems.length > 0 else noCartItems">
+          <div class="pb-3 cart-item"  *ngFor="let cartItem of cartItems">
+            <div class="media">
+              <img class="mr-3" src="{{imagesUrl+cartItem.item.image}}" alt="Generic placeholder image">
+              <div class="media-body">
+                <div class="item-details-container" style=""><!--Item details container-->
+                  <h5 style="">{{cartItem.item.no}}</h5>
+                  <h6 style="">{{cartItem.name}}</h6>
+                  <small>{{cartItem.unitPrice|currency}}</small>
+                </div>
+                <div class="row no-gutters">
+                  <div class="row bottle" style="" *ngIf="cartItem.packaging === 'bottle'"><!--Bottle-->
+                    <div class="col-4">
+                      <span>Quantity</span><br>
+                    </div>
+                    <div class="col-8">
+                      <span class="quantity">{{cartItem.quantity}}</span> {{cartItem.packaging}}(s)
+                    </div>
+                    <div class="col-4">
+                      <span>Price</span><br>
+                    </div>
+                    <div class="col-8">
+                      <span class="price">{{cartItem.totalPrice|currency}}</span>
+                    </div>
+                    <div class="col-12">
+                      <a class="btn btn-link btn-sm btn-remove" (click)="removeCartItem(cartItem)"><mdb-icon fas icon="times" size="sm"></mdb-icon> Remove</a>
+                    </div>
+                  </div>
+                  <div class="row case" style="" *ngIf="cartItem.packaging === 'case'"><!--Case-->
+                    <div class="col-4">
+                      <span>Quantity</span><br>
+                    </div>
+                    <div class="col-8">
+                      <span class="quantity">{{cartItem.quantity}}</span> {{cartItem.packaging}}(s)
+                    </div>
+                    <div class="col-4">
+                      <span>Price</span><br>
+                    </div>
+                    <div class="col-8">
+                      <span class="price">{{cartItem.totalPrice|currency}}</span>
+                    </div>
+                    <div class="col-12">
+                      <a class="btn btn-link btn-sm btn-remove" (click)="removeCartItem(cartItem)"><mdb-icon fas icon="times" size="sm"></mdb-icon> Remove</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #noCartItems>
+          <h5 class="dark-grey-text text-lighten-3 d-flex flex-column flex-center align-middle">
+            No Items In Shopping cart
+          </h5>
+        </ng-template>
+      </div>
+      <div class="modal-footer clearfix pt-1">
+        <h5 class="font-weight-bold">{{totalItems}} items</h5>&nbsp;|&nbsp;
+        <h4 class="font-weight-800">{{totalCost | currency}}</h4>
+      </div>
+      <div class="modal-footer clearfix pt-1">
+<!--        <button class="col-5 btn btn-sm btn-light btn-wine" style="">Details</button>-->
+<!--        <div class="col-1 mx-2"></div>-->
+<!--        <button class="col-5 btn btn-sm btn-dark btn-wine" style="" (click)="addToCart(item)">Add To Cart</button>-->
+        <button type="button" class="btn btn-lg btn-link btn-wine waves-light" aria-label="Close" (click)="shoppingCartModal.hide()">Close</button>
+        <button type="button" class="btn btn-lg btn-light btn-wine waves-light" aria-label="Close" (click)="emptyCart()"><mdb-icon fas icon="trash-alt" size="md"></mdb-icon> Empty Cart</button>
+        <button type="button" class="btn btn-lg btn-dark btn-wine relative waves-light"><mdb-icon fas icon="check" size="md"></mdb-icon> Check Out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
