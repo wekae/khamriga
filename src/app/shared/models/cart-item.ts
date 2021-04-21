@@ -2,7 +2,7 @@ import {Wine} from './wine';
 import {PackagingTypes} from '../enums/packaging-types';
 
 export class CartItem{
-  id: number;
+  id: string;
   name: string;
   item: Wine;
   packaging: PackagingTypes;

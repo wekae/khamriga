@@ -7,6 +7,9 @@ import {ShoppingCartService} from '../../shared/services/shopping-cart.service';
 import {CartItem} from '../../shared/models/cart-item';
 import {NotificationTypes} from '../../shared/enums/notification-types';
 import {PackagingTypes} from '../../shared/enums/packaging-types';
+// import { find, pull, filter, times, constant, debounce, set, get, keyBy, reduce, cloneDeep, sortedUniq } from 'lodash';
+import * as _ from 'lodash';
+
 
 @Component({
   selector: 'app-wines-home',
@@ -16,6 +19,8 @@ import {PackagingTypes} from '../../shared/enums/packaging-types';
 export class WinesHomeComponent implements OnInit {
 
   wines: Wine[];
+  allWines: Wine[];
+  filteredWines: Wine[];
   imagesUrl = environment.imagesApiUrl;
 
   loading = true;
@@ -25,6 +30,8 @@ export class WinesHomeComponent implements OnInit {
   cartItems: Wine[];
   totalCartItems = 0;
   totalCost = 0;
+
+  sortDirection = 'descending';
 
 
 
@@ -41,7 +48,8 @@ export class WinesHomeComponent implements OnInit {
 
   getAllWines(){
     this.winesService.getAll().subscribe(response => {
-      this.wines = response;
+      this.allWines = response;
+      this.wines = this.allWines;
       this.cartItems = this.wines;
       this.loading = false;
       this.loaded = true;
@@ -52,6 +60,26 @@ export class WinesHomeComponent implements OnInit {
     });
 
   }
+
+  public getByTag(tag: string){
+    this.wines =  this.allWines.filter(item => item.tags.some(tg => tg === tag));
+  }
+
+  public getAll(){
+    this.wines =  this.allWines;
+  }
+
+  public sortByPrice(){
+    if (this.sortDirection === 'ascending'){
+      this. wines = _.orderBy(this.wines, ['cost.bottle'], ['asc']);
+      this.sortDirection = 'descending';
+    }else if (this.sortDirection === 'descending'){
+      this. wines = _.orderBy(this.wines, ['cost.bottle'], ['desc']);
+      this.sortDirection = 'ascending';
+    }
+  }
+
+
 
   getTotals(){
     this.totalCartItems = this.shoppingCartService.getItemsCount();

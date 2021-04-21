@@ -16,11 +16,11 @@ export class ShoppingCart{
   }
 
   public removeItem(item: CartItem): void{
-    this.items = this.items.filter(itm => itm.id !== item.id);
+    this.items = this.items.filter(itm => itm.id !== item.id && itm.packaging === item.packaging);
   }
 
   public itemExists(item: CartItem): boolean {
-    const itm = this.items.filter(it => it.id === item.id);
+    const itm = this.items.filter(it => it.id === item.id && it.packaging === item.packaging);
     return itm !== null;
   }
 

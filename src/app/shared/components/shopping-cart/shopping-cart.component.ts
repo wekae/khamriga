@@ -13,6 +13,7 @@ import {NotificationTypes} from '../../enums/notification-types';
 
 export class ShoppingCartComponent implements OnInit{
   @Output() itemRemovedEvent = new EventEmitter<string>();
+  @Output() cartLoadedEvent = new EventEmitter<string>();
   @Output() cartClearedEvent = new EventEmitter<string>();
 
 
@@ -35,6 +36,7 @@ export class ShoppingCartComponent implements OnInit{
     this.cartItems = this.shoppingCartService.getItems();
     this.totalCost = this.shoppingCartService.getTotal();
     this.totalItems = this.shoppingCartService.getItemsCount();
+    this.cartLoadedEvent.emit();
   }
 
   removeCartItem(cartItem: CartItem){

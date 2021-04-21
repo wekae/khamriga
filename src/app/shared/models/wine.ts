@@ -1,7 +1,7 @@
 import {Cost} from './cost';
 
 export interface Wine {
-  no: number;
+  no: string;
   name: string;
   image: string;
   cost: Cost;
