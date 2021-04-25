@@ -1,1 +1,75 @@
-<p>wine-details works!</p>
+<div class="container">
+  <div class="row p-3">
+    <div class="col-md-12 vw-100">
+      <h4 class="title">
+        Wine Shop<br>
+        <span class="sub-title">wineshop.com</span>
+      </h4>
+    </div>
+  </div>
+</div>
+
+<div class="loader" *ngIf="loading">
+  <div class="spinner-border"  style="width: 5rem; height: 5rem" role="status">
+    <span class="visually-hidden"></span>
+  </div>
+</div>
+
+<app-e404 *ngIf="error"></app-e404>
+
+
+
+<div class="container details-container" style="" *ngIf="loaded">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="wine-image-container">
+        <img class="wine-image" [src]="imagesUrl+item.image" alt="{{item.name}}">
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="item-details-container" style=""><!--Item details container-->
+        <h2 style="">{{item.no}}</h2>
+        <h5 style="">{{item.name}}</h5>
+
+        <div class="row"><!--Details-->
+          <div class="col-12">
+            <p>{{item.details}}</p>
+          </div>
+        </div>
+
+        <div class="row m-3"><!--Tags-->
+          <div class="col-12">
+            <a class="btn btn-sm btn-link m-2">white</a>
+            <a class="btn btn-sm btn-link m-2">white</a>
+            <a class="btn btn-sm btn-link m-2">white</a>
+          </div>
+        </div>
+
+
+        <div class="row no-gutters"><!--Quantity-->
+          <div class="bottle-container" style=""><!--bottle-->
+            <p class="bottle" style="">
+              Bottle:<br>
+              {{item.cost.bottle|currency}}<br>
+              <input type="number" style="width: 30px"/> QTY
+            </p>
+          </div>
+          <div class=""><!--Case-->
+            <p class="case" style="">
+              Case:<br>
+              {{item.cost.case|currency}}<br>
+              <input type="number" style="width: 30px"/> QTY
+            </p>
+          </div>
+        </div>
+        <div class="row no-gutters px-0">
+          <button class="col-5 btn btn-sm btn-light btn-wine" style="" routerLink="/wines/{{item.no}}/details">Details</button>
+          <div class="col-1 mx-2"></div>
+          <button class="col-5 btn btn-sm btn-dark btn-wine" style="" (click)="addToCart(item)">Add To Cart</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

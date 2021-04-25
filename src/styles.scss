@@ -84,3 +84,42 @@ body{
     background-color: $color-accent-3;
   }
 }
+
+//Hide spinner in number input type
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+  -moz-appearance:textfield; /* Firefox */
+  padding:1px;
+  font-size: 0.8rem;
+}
+
+.loader{
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+
+}
+
+.title{
+  font-weight: 800;
+  text-align: center;
+  line-height: 0.7rem;
+
+}
+
+.sub-title{
+  font-family: Arial, sans-serif;
+  font-size: 0.6rem;
+  font-weight: 300;
+  color: $color-primary;
+  text-align: center;
+}

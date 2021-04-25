@@ -20,7 +20,7 @@ export class ShoppingCartService {
   public initShoppingCart(): void {
     if (localStorage.getItem(environment.shoppingCartKey) === null){
       this.shoppingCart = new ShoppingCart();
-      localStorage.setItem(environment.shoppingCartKey, JSON.stringify(this.shoppingCart));
+      localStorage.setItem(environment.shoppingCartKey, btoa(JSON.stringify(this.shoppingCart)));
     }
   }
 
@@ -29,7 +29,7 @@ export class ShoppingCartService {
       this.initShoppingCart();
     }
 
-    const retrieved = localStorage.getItem(environment.shoppingCartKey);
+    const retrieved = atob(localStorage.getItem(environment.shoppingCartKey));
     const returnCart = JSON.parse(retrieved);
     const shoppingCart = new ShoppingCart();
     Object.assign(shoppingCart, returnCart);
@@ -39,18 +39,18 @@ export class ShoppingCartService {
   public addItem(item: CartItem): void{
     this.shoppingCart = this.getShoppingCart();
     this.shoppingCart.addItem(item);
-    localStorage.setItem(environment.shoppingCartKey, JSON.stringify(this.shoppingCart));
+    localStorage.setItem(environment.shoppingCartKey, btoa(JSON.stringify(this.shoppingCart)));
   }
 
   public removeItem(item: CartItem): void{
     this.shoppingCart = this.getShoppingCart();
     this.shoppingCart.removeItem(item);
-    localStorage.setItem(environment.shoppingCartKey, JSON.stringify(this.shoppingCart));
+    localStorage.setItem(environment.shoppingCartKey, btoa(JSON.stringify(this.shoppingCart)));
   }
 
   public emptyCart(): void{
     this.shoppingCart = new ShoppingCart();
-    localStorage.setItem(environment.shoppingCartKey, JSON.stringify(this.shoppingCart));
+    localStorage.setItem(environment.shoppingCartKey, btoa(JSON.stringify(this.shoppingCart)));
   }
 
   public getItems(): CartItem[]{
