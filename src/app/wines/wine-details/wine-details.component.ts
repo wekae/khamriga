@@ -73,16 +73,31 @@ export class WineDetailsComponent implements OnInit {
   }
 
   public addToCart(wine: Wine){
-    const cartItem = new CartItem();
-    cartItem.id = wine.no;
-    cartItem.name = wine.name;
-    cartItem.quantity = 112;
-    cartItem.packaging = PackagingTypes.CASE;
-    cartItem.unitPrice = wine.cost.bottle;
-    cartItem.totalPrice = cartItem.quantity * cartItem.unitPrice;
-    cartItem.item = wine;
-    this.shoppingCartService.addItem(cartItem);
-    this.notificationService.showSnackbar(NotificationTypes.INFO, 'Added', cartItem.name +  ' added to cart');
+    const name = wine.name;
+    if (wine.quantityBottle > 0){
+      const cartItem = new CartItem();
+      cartItem.id = wine.no;
+      cartItem.name = wine.name;
+      cartItem.quantity = wine.quantityBottle;
+      cartItem.packaging = PackagingTypes.BOTTLE;
+      cartItem.unitPrice = wine.cost.bottle;
+      cartItem.totalPrice = cartItem.quantity * cartItem.unitPrice;
+      cartItem.item = wine;
+      this.shoppingCartService.addItem(cartItem);
+      this.notificationService.showSnackbar(NotificationTypes.INFO, 'Added', name +  ' added to cart');
+    }
+    if (wine.quantityCase > 0){
+      const cartItem = new CartItem();
+      cartItem.id = wine.no;
+      cartItem.name = wine.name;
+      cartItem.quantity = wine.quantityCase;
+      cartItem.packaging = PackagingTypes.CASE;
+      cartItem.unitPrice = wine.cost.case;
+      cartItem.totalPrice = cartItem.quantity * cartItem.unitPrice;
+      cartItem.item = wine;
+      this.shoppingCartService.addItem(cartItem);
+      this.notificationService.showSnackbar(NotificationTypes.INFO, 'Added', name +  ' added to cart');
+    }
 
     // this.getTotals();
   }

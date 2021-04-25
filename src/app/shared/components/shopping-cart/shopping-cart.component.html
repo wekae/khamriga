@@ -20,7 +20,7 @@
                 <div class="item-details-container" style=""><!--Item details container-->
                   <h5 style="">{{cartItem.item.no}}</h5>
                   <h6 style="">{{cartItem.name}}</h6>
-                  <small>{{cartItem.unitPrice|currency}}</small>
+                  <small>UNIT PRICE - {{cartItem.unitPrice|currency}}</small>
                 </div>
                 <div class="row no-gutters">
                   <div class="row bottle" style="" *ngIf="cartItem.packaging === 'bottle'"><!--Bottle-->

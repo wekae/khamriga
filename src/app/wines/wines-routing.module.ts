@@ -28,6 +28,13 @@ const routes: Routes = [
         data: {
           title: 'All Wines'
         }
+      },
+      {
+        path: 'tags/:tag',
+        component: WinesHomeComponent,
+        data: {
+          title: 'All Wines'
+        }
       }
     ]
   }

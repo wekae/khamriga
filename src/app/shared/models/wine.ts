@@ -7,4 +7,6 @@ export interface Wine {
   cost: Cost;
   tags: string[];
   details: string;
+  quantityBottle: number;
+  quantityCase: number;
 }

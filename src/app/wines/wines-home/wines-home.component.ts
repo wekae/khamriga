@@ -9,6 +9,7 @@ import {NotificationTypes} from '../../shared/enums/notification-types';
 import {PackagingTypes} from '../../shared/enums/packaging-types';
 // import { find, pull, filter, times, constant, debounce, set, get, keyBy, reduce, cloneDeep, sortedUniq } from 'lodash';
 import * as _ from 'lodash';
+import {ActivatedRoute, Router} from '@angular/router';
 
 
 @Component({
@@ -36,21 +37,40 @@ export class WinesHomeComponent implements OnInit {
 
 
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
     public notificationService: NotificationService,
     protected winesService: WinesService,
     public shoppingCartService: ShoppingCartService
   ) { }
 
   ngOnInit(): void {
-    // this.notificationService.showMessage('primary', 'test', 'this is a test');
-    this.getAllWines();
+    const currentUrl = this.route.routeConfig.path;
+
+
+    // Load items based on URL
+    switch (currentUrl){
+      case 'tags/:tag':
+        this.route.params.subscribe(routeParams => {
+          const tag = routeParams.tag;
+          console.log(tag);
+          this.getAllWines(tag);
+        });
+        break;
+      default:
+        this.getAllWines();
+        break;
+    }
   }
 
-  getAllWines(){
+  getAllWines(tag = ''){
     this.winesService.getAll().subscribe(response => {
       this.allWines = response;
       this.wines = this.allWines;
-      this.cartItems = this.wines;
+      if (tag !== ''){
+        this.filterByTag(tag);
+      }
+      // this.cartItems = this.wines;
       this.loading = false;
       this.loaded = true;
     }, error1 => {
@@ -61,7 +81,7 @@ export class WinesHomeComponent implements OnInit {
 
   }
 
-  public getByTag(tag: string){
+  public filterByTag(tag: string){
     this.wines =  this.allWines.filter(item => item.tags.some(tg => tg === tag));
   }
 
@@ -87,16 +107,31 @@ export class WinesHomeComponent implements OnInit {
   }
 
   public addToCart(wine: Wine){
-    const cartItem = new CartItem();
-    cartItem.id = wine.no;
-    cartItem.name = wine.name;
-    cartItem.quantity = 112;
-    cartItem.packaging = PackagingTypes.CASE;
-    cartItem.unitPrice = wine.cost.bottle;
-    cartItem.totalPrice = cartItem.quantity * cartItem.unitPrice;
-    cartItem.item = wine;
-    this.shoppingCartService.addItem(cartItem);
-    this.notificationService.showSnackbar(NotificationTypes.INFO, 'Added', cartItem.name +  ' added to cart');
+    const name = wine.name;
+    if (wine.quantityBottle > 0){
+      const cartItem = new CartItem();
+      cartItem.id = wine.no;
+      cartItem.name = wine.name;
+      cartItem.quantity = wine.quantityBottle;
+      cartItem.packaging = PackagingTypes.BOTTLE;
+      cartItem.unitPrice = wine.cost.bottle;
+      cartItem.totalPrice = cartItem.quantity * cartItem.unitPrice;
+      cartItem.item = wine;
+      this.shoppingCartService.addItem(cartItem);
+      this.notificationService.showSnackbar(NotificationTypes.INFO, 'Added', name +  ' added to cart');
+    }
+    if (wine.quantityCase > 0){
+      const cartItem = new CartItem();
+      cartItem.id = wine.no;
+      cartItem.name = wine.name;
+      cartItem.quantity = wine.quantityCase;
+      cartItem.packaging = PackagingTypes.CASE;
+      cartItem.unitPrice = wine.cost.case;
+      cartItem.totalPrice = cartItem.quantity * cartItem.unitPrice;
+      cartItem.item = wine;
+      this.shoppingCartService.addItem(cartItem);
+      this.notificationService.showSnackbar(NotificationTypes.INFO, 'Added', name +  ' added to cart');
+    }
 
     this.getTotals();
   }

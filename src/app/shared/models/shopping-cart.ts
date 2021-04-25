@@ -16,7 +16,15 @@ export class ShoppingCart{
   }
 
   public removeItem(item: CartItem): void{
-    this.items = this.items.filter(itm => itm.id !== item.id && itm.packaging === item.packaging);
+    this.items = this.items.filter(itm => {
+      if (itm.id !== item.id){
+        return true;
+      }else if (itm.id === item.id){
+        if (itm.packaging !== item.packaging) {
+          return true;
+        }
+      }
+    });
   }
 
   public itemExists(item: CartItem): boolean {

@@ -9,6 +9,16 @@
   </div>
 </div>
 
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 px-1 py-0">
+      <div class="block-content">
+        <button class="btn btn-light btn-wine" routerLink="/wines">back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="loader" *ngIf="loading">
   <div class="spinner-border"  style="width: 5rem; height: 5rem" role="status">
     <span class="visually-hidden"></span>
@@ -39,9 +49,7 @@
 
         <div class="row m-3"><!--Tags-->
           <div class="col-12">
-            <a class="btn btn-sm btn-link m-2">white</a>
-            <a class="btn btn-sm btn-link m-2">white</a>
-            <a class="btn btn-sm btn-link m-2">white</a>
+            <button class="btn btn-sm btn-link m-2 btn-wine btn-tag" *ngFor="let tag of item.tags" routerLink="/wines/tags/{{tag}}">{{tag}}</button>
           </div>
         </div>
 
@@ -51,20 +59,18 @@
             <p class="bottle" style="">
               Bottle:<br>
               {{item.cost.bottle|currency}}<br>
-              <input type="number" style="width: 30px"/> QTY
+              <input type="number" [(ngModel)]="item.quantityBottle" style="width: 30px"/> QTY
             </p>
           </div>
           <div class=""><!--Case-->
             <p class="case" style="">
               Case:<br>
               {{item.cost.case|currency}}<br>
-              <input type="number" style="width: 30px"/> QTY
+              <input type="number" [(ngModel)]="item.quantityCase" style="width: 30px"/> QTY
             </p>
           </div>
         </div>
         <div class="row no-gutters px-0">
-          <button class="col-5 btn btn-sm btn-light btn-wine" style="" routerLink="/wines/{{item.no}}/details">Details</button>
-          <div class="col-1 mx-2"></div>
           <button class="col-5 btn btn-sm btn-dark btn-wine" style="" (click)="addToCart(item)">Add To Cart</button>
         </div>
       </div>

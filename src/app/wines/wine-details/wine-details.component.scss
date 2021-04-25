@@ -1,3 +1,4 @@
+@import "src/styles";
 .details-container{
   height: 100vh;
   display: flex;
@@ -57,3 +58,41 @@
   padding:0 1rem 0 1rem;
 }
 
+.btn{
+  &-tag{
+    border: 1px solid $grey-lighten-3;
+    color: $grey-darken-2;
+    text-decoration: none;
+  }
+}
+
+
+
+.btn{
+  &-light{}
+  &-light, &-dark, &-link{
+    transition: all 600ms ease;
+  }
+  &-light:hover, &-link:hover{
+    background-color: $color-accent;
+  }
+  &-dark:hover{
+    background-color: $grey-lighten-2;
+    color:$grey-darken-4;
+  }
+  &-cart{
+    background-color: $grey-lighten-4;
+    &-2{
+      background-color: $grey-lighten-3;
+    }
+  }
+  &-wine{
+    font-family: Arial,sans-serif;
+    font-size:0.7rem;
+  }
+  &-wine-even{
+    font-family: Arial,sans-serif;
+    width: 100%;
+    font-size:0.7rem;
+  }
+}
