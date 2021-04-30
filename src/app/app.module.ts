@@ -12,6 +12,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {KhamrigaModule} from './khamriga.module';
 import {SharedModule} from './shared/shared.module';
 import {ToastrModule} from 'ngx-toastr';
+import {MAT_RADIO_DEFAULT_OPTIONS} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,6 @@ import {ToastrModule} from 'ngx-toastr';
     KhamrigaModule,
     SharedModule,
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

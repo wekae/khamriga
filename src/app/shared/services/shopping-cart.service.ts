@@ -38,6 +38,8 @@ export class ShoppingCartService {
 
   public addItem(item: CartItem): void{
     this.shoppingCart = this.getShoppingCart();
+    item.quantity = item.quantity > 0 ? item.quantity : 1;
+    item.totalPrice = item.quantity * item.unitPrice;
     this.shoppingCart.addItem(item);
     localStorage.setItem(environment.shoppingCartKey, btoa(JSON.stringify(this.shoppingCart)));
   }
@@ -55,7 +57,8 @@ export class ShoppingCartService {
 
   public getItems(): CartItem[]{
     this.shoppingCart = this.getShoppingCart();
-    return this.shoppingCart.getItems();
+    // Sort Items
+    return this.shoppingCart.getItems().sort((a, b) => 0 - (a.item.no < b.item.no ? 1 : -1));
   }
 
   public getItemsCount(): number{

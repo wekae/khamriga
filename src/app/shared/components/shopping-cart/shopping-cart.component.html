@@ -78,7 +78,7 @@
 <!--        <button class="col-5 btn btn-sm btn-dark btn-wine" style="" (click)="addToCart(item)">Add To Cart</button>-->
         <button type="button" class="btn btn-lg btn-link btn-wine waves-light" aria-label="Close" (click)="shoppingCartModal.hide()">Close</button>
         <button type="button" class="btn btn-lg btn-light btn-wine waves-light" aria-label="Close" (click)="emptyCart()"><mdb-icon fas icon="trash-alt" size="md"></mdb-icon> Empty Cart</button>
-        <button type="button" class="btn btn-lg btn-dark btn-wine relative waves-light"><mdb-icon fas icon="check" size="md"></mdb-icon> Check Out</button>
+        <button type="button" class="btn btn-lg btn-dark btn-wine relative waves-light" routerLink="/checkout" [disabled]="totalItems<=0" ><mdb-icon fas icon="check" size="md"></mdb-icon> Check Out</button>
       </div>
     </div>
   </div>

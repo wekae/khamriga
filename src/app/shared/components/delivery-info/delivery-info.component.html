@@ -1,0 +1,69 @@
+<a type="button"  class="btn btn-link btn-wine-even btn-cart waves-light" (click)="deliveryInfoModal.show();"><mdb-icon fas icon="truck" size="md"></mdb-icon> Delivery Info</a>
+
+<div mdbModal #deliveryInfoModal="mdbModal" class="modal fade bottom" tabindex="-1" role="dialog" aria-labelledby="deliveryInfo"
+     aria-hidden="true">
+  <div class="modal-dialog modal-fluid modal-full-height modal-bottom" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="deliveryInfoModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="delivery-info-title"><mdb-icon fas icon="truck" size="sm"></mdb-icon> Delivery Info</h4>
+      </div>
+      <div class="modal-body">
+        <div class="delivery-address-container" *ngIf="deliveryAddress else noDeliveryAddress">
+          <table class="table table-borderless" mdbTable *ngIf="deliveryAddress">
+            <tr>
+              <th class="font-weight-700">Name:</th>
+              <td>{{deliveryAddress.firstName}}&nbsp;{{deliveryAddress.lastName}}</td>
+            </tr>
+            <tr>
+              <th class="font-weight-700">Email:</th>
+              <td>{{deliveryAddress.email}}</td>
+            </tr>
+            <tr>
+              <th class="font-weight-700">Mobile No:</th>
+              <td>{{deliveryAddress.mobileNumber}}</td>
+            </tr>
+            <tr>
+              <th class="font-weight-700">Delivery Address:</th>
+              <td>{{deliveryAddress.deliveryAddress}}</td>
+            </tr>
+            <tr>
+              <th class="font-weight-700">Estate:</th>
+              <td>{{deliveryAddress.estate}}</td>
+            </tr>
+            <tr *ngIf="deliveryAddress.area">
+              <th class="font-weight-700">Area:</th>
+              <td>{{deliveryAddress.area}}</td>
+            </tr>
+            <tr *ngIf="deliveryAddress.deliveryNotes">
+              <th class="font-weight-700" colspan="2">Delivery Notes</th>
+            </tr>
+            <tr *ngIf="deliveryAddress.deliveryNotes">
+              <td colspan="2">
+                {{deliveryAddress.deliveryNotes}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        <ng-template #noDeliveryAddress>
+          No default address
+        </ng-template>
+      </div>
+      <div class="modal-footer justify-content-center">
+<!--        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Close</button>-->
+<!--        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>OK!</button>-->
+        <button type="button" class="btn btn-lg btn-link btn-wine waves-light" aria-label="Close" (click)="deliveryInfoModal.hide()">Close</button>
+        <button type="button" class="btn btn-lg btn-light btn-wine waves-light" aria-label="Close" [disabled]="!deliveryAddress" (click)="deleteDefaultAddress()"><mdb-icon fas icon="trash-alt" size="md"></mdb-icon> Delete Address</button>
+      </div>
+    </div>
+  </div >
+</div >
+
+
+
+
+
+
+

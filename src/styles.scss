@@ -48,6 +48,36 @@ body{
   }
 }
 
+.vh{
+  &-10{
+    height: 10vh;
+  }
+  &-20{
+    height: 20vh;
+  }
+  &-30{
+    height: 30vh;
+  }
+  &-40{
+    height: 40vh;
+  }
+  &-50{
+    height: 50vh;
+  }
+  &-60{
+    height: 60vh;
+  }
+  &-70{
+    height: 70vh;
+  }
+  &-80{
+    height: 80vh;
+  }
+  &-90{
+    height: 90vh;
+  }
+}
+
 
 .btn{
   &-light{}

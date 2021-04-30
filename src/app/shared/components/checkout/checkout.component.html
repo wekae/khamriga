@@ -1,0 +1,334 @@
+<div class="container" routerLink="/" style="cursor: pointer">
+  <div class="row p-3">
+    <div class="col-md-12 vw-100">
+      <h4 class="title">
+        Wine Shop<br>
+        <span class="sub-title">wineshop.com</span>
+      </h4>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="!checkoutComplete">
+  <div class="row">
+    <div class="col-12 checkout-title">
+      <h2>Checkout</h2>
+    </div>
+    <div class="col-12">
+
+      <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+        <mat-step [stepControl]="shoppingCartFormGroup">
+          <form [formGroup]="shoppingCartFormGroup">
+            <ng-template matStepLabel>Shopping Cart</ng-template>
+            <h4>Shopping Cart</h4>
+
+            <p>There are <strong class="font-weight-800">{{totalItems}}</strong> items in your cart.</p>
+<!--            <app-shopping-cart (cartLoadedEvent)="getShoppingCartItems()" (itemRemovedEvent)="getTotals()" (cartClearedEvent)="getTotals()"></app-shopping-cart>-->
+            <div class="row py-1"></div>
+            <div class="row">
+              <table class="table" mdbTable hover="true">
+                <thead>
+                <tr>
+                  <th class="font-weight-700" style="width:50px"></th>
+                  <th class="font-weight-700" style="width:60%;">PRODUCT</th>
+                  <th class="font-weight-700" style="width:20%;">QTY</th>
+                  <th class="font-weight-700" style="width:18%;">PRICE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr mdbTableCol *ngFor="let cartItem of cartItems">
+                  <th scope="row">
+                    <img alt="{{cartItem.name}}" src="{{imagesApiUrl+cartItem.item.image}}" style="width:50px; height:90px; object-fit: contain;"/>
+                  </th>
+                  <td class="cell-middle">
+                    <div class="item-details-container" style=""><!--Item details container-->
+                      <h5 style="">{{cartItem.item.no}}</h5>
+                      <h6 style="">{{cartItem.name}}</h6>
+                      <small>UNIT PRICE - {{cartItem.unitPrice|currency}}</small>
+                    </div>
+                  </td>
+                  <td class="cell-middle">
+                    <div class="">
+                      <div class="row bottle" style="" *ngIf="cartItem.packaging === 'bottle'"><!--Bottle-->
+                        <div class="col-12" style="">
+                          <input type="number" style="width: 30px" (keydown.enter)="updateCartItem(cartItem)" [(ngModel)]="cartItem.quantity" [ngModelOptions]="{standalone: true}"/>
+                          &nbsp; {{cartItem.packaging}}(s)
+<!--                          <span class="quantity">{{cartItem.quantity}}</span> {{cartItem.packaging}}(s)-->
+                        </div>
+                      </div>
+                      <div class="row case" style="" *ngIf="cartItem.packaging === 'case'"><!--Case-->
+                        <div class="col-12" style="float: right;">
+                          <input type="number" style="width: 30px" (keydown.enter)="updateCartItem(cartItem)" [(ngModel)]="cartItem.quantity" [ngModelOptions]="{standalone: true}"/>
+                          &nbsp; {{cartItem.packaging}}(s)
+<!--                          <span class="quantity">{{cartItem.quantity}}</span> {{cartItem.packaging}}(s)-->
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="cell-middle">
+                    <div class="row no-gutters">
+                      <div class="row bottle" style="" *ngIf="cartItem.packaging === 'bottle'"><!--Bottle-->
+                        <div class="col-12" style="float: right;">
+                          <span class="price">{{cartItem.totalPrice|currency}}</span>
+                        </div>
+                      </div>
+                      <div class="row case" style="" *ngIf="cartItem.packaging === 'case'"><!--Case-->
+                        <div class="col-12" style="float: right;">
+                          <span class="price">{{cartItem.totalPrice|currency}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="cell-middle">
+                    <div class="">
+                      <a class="btn btn-link btn-sm btn-remove" (click)="removeCartItem(cartItem)"><mdb-icon fas icon="times" size="lg"></mdb-icon></a>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <div class="col-12" *ngFor="let cartItem of cartItems">
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-12 modal-footer">
+<!--                <h5 class="font-weight-bold">{{totalItems}} items</h5>&nbsp;|&nbsp;-->
+                <h5 class="font-weight-bold">Total</h5>&nbsp;|&nbsp;
+                <h4 class="font-weight-800">{{totalCost | currency}}</h4>
+              </div>
+            </div>
+            <div>
+              <button  class="btn btn-link btn-wine my-3 mx-1" matStepperPrevious routerLink="/wines">Continue Shopping</button>
+              <button class="btn btn-dark btn-wine my-3 mx-1" matStepperNext>Delivery Info</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="deliveryInfoFormGroup">
+          <form [formGroup]="deliveryInfoFormGroup">
+            <ng-template matStepLabel>Delivery Info</ng-template>
+            <h4>Delivery Info</h4>
+
+            <div class="col-md-12 p-3">
+              <button class="btn btn-link btn-wine" (click)="loadSavedDeliveryAddress()">Load default address</button>
+            </div>
+
+            <mat-form-field class="col-md-6">
+              <input matInput placeholder="First Name" formControlName="firstName" required>
+            </mat-form-field>
+            <mat-form-field class="col-md-6">
+              <input matInput placeholder="Last Name" formControlName="lastName" required>
+            </mat-form-field>
+            <mat-form-field class="col-md-12">
+              <input matInput placeholder="Email" type="email" formControlName="email" required>
+            </mat-form-field>
+            <mat-form-field class="col-md-6">
+              <input matInput placeholder="Mobile Number" type="tel" formControlName="mobileNumber" required>
+            </mat-form-field>
+            <mat-form-field class="col-md-12">
+              <input matInput placeholder="Delivery Address" formControlName="deliveryAddress" required>
+            </mat-form-field>
+            <mat-form-field class="col-md-6">
+              <input matInput placeholder="Estate" formControlName="estate" required>
+            </mat-form-field>
+            <mat-form-field class="col-md-6">
+              <input matInput placeholder="Area" formControlName="area">
+            </mat-form-field>
+            <mat-form-field class="col-md-12">
+              <textarea matInput placeholder="Delivery Notes" formControlName="deliveryNotes" [rows]="6"></textarea>
+            </mat-form-field>
+            <!-- Default unchecked -->
+            <div class="col-md-12">
+              <mdb-checkbox [default]="true" [(ngModel)]="defaultAddress" [ngModelOptions]="{standalone:true}">Set As Default Address</mdb-checkbox>
+            </div>
+            <div>
+              <button  class="btn btn-link btn-wine my-3 mx-1" matStepperPrevious>Shopping Cart</button>
+              <button  class="btn btn-dark btn-wine my-3 mx-1" matStepperNext>Payment Method</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="paymentMethodFormGroup">
+          <form [formGroup]="paymentMethodFormGroup">
+            <ng-template matStepLabel>Payment Method</ng-template>
+            <h4>Payment Method</h4>
+
+            <!-- Card Payment -->
+            <div class="row card p-3">
+              <div class="col-12 custom-control custom-radio">
+                <input required type="radio" class="custom-control-input" value="card" id="cardPayment" name="paymentMethod" mdbInput formControlName="paymentMethod">
+                <label class="custom-control-label" for="cardPayment">Card Payment &nbsp;<mdb-icon fab icon="cc-visa"></mdb-icon>&nbsp;<mdb-icon fab icon="cc-mastercard"></mdb-icon></label>
+              </div>
+              <mat-form-field class="col-md-6 offset-md-3">
+                <input matInput type="text" placeholder="Card Number" formControlName="cardNumber" required>
+              </mat-form-field>
+              <mat-form-field class="col-md-6 offset-md-3">
+                <input matInput type="text" placeholder="Card Holder Name" formControlName="cardHolderName" required>
+              </mat-form-field>
+              <div class="col-md-6 offset-md-3">
+                <div class="row">
+                  <mat-form-field class="col-md-4 py-1">
+                    <input matInput type="number" placeholder="Year" formControlName="cardYear" required>
+                  </mat-form-field>
+                  <mat-form-field class="col-md-4 py-1">
+                    <input matInput type="number" placeholder="Month" formControlName="cardMonth" required>
+                  </mat-form-field>
+                  <mat-form-field class="col-md-4 py-1">
+                    <input matInput type="number" placeholder="CVV2" formControlName="cardCvv2" required>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <div class="row py-3"></div>
+
+            <!-- Cash On Delivery -->
+            <div class="row card p-3">
+              <div class="col-12 custom-control custom-radio">
+                <input required type="radio" class="custom-control-input" value="cash_on_delivery" id="codPayment" name="paymentMethod" checked mdbInput formControlName="paymentMethod">
+                <label class="custom-control-label" for="codPayment">Cash On Delivery</label>
+              </div>
+              <p>Pay on delivery of items</p>
+            </div>
+
+            <div>
+              <button  class="btn btn-link btn-wine my-3 mx-1" matStepperPrevious>Delivery Info</button>
+              <button  class="btn btn-dark btn-wine my-3 mx-1" matStepperNext (click)="loadSummary()">Confirm Order</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step (click)="loadSummary()">
+          <ng-template matStepLabel>Confirmation</ng-template>
+          <h4>Confirmation</h4>
+
+          <div class="row py-3"></div>
+          <div class="row">
+            <div class="col-md-12 card p-3 mb-2">
+              <h5>Shopping Cart</h5>
+              <table class="table" mdbTable>
+                <thead>
+                <tr>
+                  <th class="font-weight-700">Product</th>
+                  <th class="font-weight-700">Quantity</th>
+                  <th class="font-weight-700">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let cartItem of cartItems">
+                    <td>{{cartItem.name}}</td>
+                    <td>
+                      <span *ngIf="cartItem.packaging==='bottle'">{{cartItem.quantity}}&nbsp;bottle(s)</span>
+                      <span *ngIf="cartItem.packaging==='case'">{{cartItem.quantity}}&nbsp;case(s)</span>
+                    </td>
+                    <td><span class="font-weight-800">{{cartItem.totalPrice}}</span></td>
+                  </tr>
+                <tr>
+                  <td colspan="3" align="right">
+                    <span class="font-weight-900 total">Total:&nbsp;{{totalCost}}</span>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="col-md-12 card p-3 mb-2">
+              <h5>Delivery Info</h5>
+
+              <table class="table" mdbTable *ngIf="deliveryAddress">
+                <tr>
+                  <th class="font-weight-700">Name:</th>
+                  <td>{{deliveryAddress.firstName}}&nbsp;{{deliveryAddress.lastName}}</td>
+                </tr>
+                <tr>
+                  <th class="font-weight-700">Email:</th>
+                  <td>{{deliveryAddress.email}}</td>
+                </tr>
+                <tr>
+                  <th class="font-weight-700">Mobile No:</th>
+                  <td>{{deliveryAddress.mobileNumber}}</td>
+                </tr>
+                <tr>
+                  <th class="font-weight-700">Delivery Address:</th>
+                  <td>{{deliveryAddress.deliveryAddress}}</td>
+                </tr>
+                <tr>
+                  <th class="font-weight-700">Estate:</th>
+                  <td>{{deliveryAddress.estate}}</td>
+                </tr>
+                <tr *ngIf="deliveryAddress.area">
+                  <th class="font-weight-700">Area:</th>
+                  <td>{{deliveryAddress.area}}</td>
+                </tr>
+                <tr *ngIf="deliveryAddress.deliveryNotes">
+                  <th class="font-weight-700" colspan="2">Delivery Notes</th>
+                </tr>
+                <tr *ngIf="deliveryAddress.deliveryNotes">
+                  <td colspan="2">
+                    {{deliveryAddress.deliveryNotes}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="col-md-12 card p-3 mb-2">
+              <h5>Payment Method</h5>
+
+              <table class="table" mdbTable *ngIf="paymentMethod === 'cash_on_delivery'">
+                <tbody>
+                <tr>
+                  <th class="font-weight-700">Payment Method:</th>
+                  <td>Cash on delivery</td>
+                </tr>
+                </tbody>
+              </table>
+
+              <table class="table" mdbTable *ngIf="paymentMethod === 'card'">
+                <tbody>
+                <tr>
+                  <th class="font-weight-700">Payment Method:</th>
+                  <td>Card Payment</td>
+                </tr>
+                <tr>
+                  <th class="font-weight-700">Card Number:</th>
+                  <td>{{card.cardNumber}}</td>
+                </tr>
+                <tr>
+                  <th class="font-weight-700">Card Holder's Name:</th>
+                  <td>{{card.cardHolderName}}</td>
+                </tr>
+                <tr>
+                  <th class="font-weight-700">Year:</th>
+                  <td>{{card.year}}</td>
+                </tr>
+                <tr>
+                  <th class="font-weight-700">Month:</th>
+                  <td>{{card.month}}</td>
+                </tr>
+                <tr>
+                  <th class="font-weight-700">CVV2:</th>
+                  <td>{{card.cvv2}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <button  class="btn btn-link btn-wine my-3 mx-1" matStepperPrevious>Payment Method</button>
+            <button  class="btn btn-dark btn-wine my-3 mx-1" matStepperNext (click)="checkout()">Complete Order</button>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+
+
+    </div>
+  </div>
+</div>
+
+
+<div class="container vh-70 complete-checkout" *ngIf="checkoutComplete">
+  <mdb-icon far icon="check-circle" size="5x" class="green-text p-3"></mdb-icon>
+  <h1 class="font-weight-900">
+    Checkout Complete
+  </h1>
+  <h6>Your order is being processed and will be on the way shortly. While you wait, feel free to <a routerLink="/wines">continue shopping.</a></h6>
+</div>
